@@ -5,7 +5,9 @@ dotenv.config({path:'\.env'})
 
 async function connectDb() {
     try {
-        await mongoose.connect(process.env.mongouri)
+        await mongoose.connect(process.env.mongouri,{
+            dbName:process.env.dbname
+        })
         return "connection successful"
     } catch (error) {
         console.log(error);
