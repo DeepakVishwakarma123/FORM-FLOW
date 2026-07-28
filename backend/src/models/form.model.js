@@ -6,7 +6,7 @@ const formSchema=new Schema(
     {
         formname:{
             type:String,
-            require:true
+            required:true
         },
         userId:{
             type:Schema.Types.ObjectId,
@@ -21,3 +21,6 @@ const formSchema=new Schema(
 const forms=new mongoose.model("form",formSchema)
 
 export default forms
+
+//how we store forms data basiclly
+

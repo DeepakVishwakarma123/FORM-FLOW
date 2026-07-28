@@ -6,22 +6,22 @@ const userSchema=new Schema(
     {
         username:{
             type:String,
-            require:true,
+            required:true,
         },
         refreshToken:{
             type:String,
-            require:true
+            required:true
         },
         forgotPasswordToken:{
             type:String
         },
         hashedPassword:{
             type:String,
-            require:true
+            required:true
         },
         emailId:{
             type:String,
-            require:true
+            required:true
         },
         isEmailVerfied:{
             type:Boolean,
@@ -33,3 +33,4 @@ const userSchema=new Schema(
 const users=new mongoose.model("user",userSchema)
 
 export default users
+
