@@ -24,5 +24,8 @@ app.use(cors({
 }))
 
 
+import formRouter from "./routes/Form-Routes.js";
+app.use("/formflow",formRouter)
+
 
 export default app

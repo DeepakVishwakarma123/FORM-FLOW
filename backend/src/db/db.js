@@ -6,7 +6,7 @@ dotenv.config({path:'\.env'})
 async function connectDb() {
     try {
         await mongoose.connect(process.env.mongouri,{
-            dbName:process.env.dbname
+            dbName:"flowform"
         })
         return "connection successful"
     } catch (error) {
@@ -18,3 +18,4 @@ async function connectDb() {
 }
 
 export default connectDb;
+
