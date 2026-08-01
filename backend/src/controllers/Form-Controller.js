@@ -3,7 +3,7 @@ import forms from "../models/form.model.js";
 import {nanoid} from "nanoid"
 import mongoose from "mongoose";
 import formSubmissions from "../models/submission.model.js";
-
+import blockTypes from "../utils/constant.js";
 
 //create form controller
 let CreateForm=asyncHandler(
@@ -53,16 +53,19 @@ let CreateForm=asyncHandler(
 let RecordSubmission=asyncHandler(
     async function (req,res) {
         let {formId}=req.query
-        
-        //there are multiple fields can come in request body object 
-        //show we want to let only specfic fields which follows our rule or system considerations
 
-        let bodyObject=req.body
-        
+        //body from data 
+        let userData=req.body
+
+        console.log(userData)
+        res.status(200).json(
+            {
+                "message":"everythign is okk here",
+                "userdata":userData
+            }
+        )
     }
 )
 
 
-
-
-export {CreateForm}
+export {CreateForm,RecordSubmission}
