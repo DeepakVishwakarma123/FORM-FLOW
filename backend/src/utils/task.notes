@@ -1,0 +1,4 @@
+TODO:
+
+[√] add pattern to detect only allowed block field types not everyone
+[ ] we have to add these fields inside joi as to check there value as custom field
