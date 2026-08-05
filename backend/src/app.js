@@ -9,11 +9,10 @@ dotenv.config({path:"\.env"})
 const app=express()
 
 
-app.use(express.json({limit:"10kb"}))
+app.use(express.json({limit:"1000kb"}))
 app.use(express.urlencoded(
     {
-        extended:true,
-        parameterLimit:1,
+        extended:true
     }
 ))
 
