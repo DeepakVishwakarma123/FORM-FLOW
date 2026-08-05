@@ -7,7 +7,7 @@ const formRouter=Router()
 
 
 formRouter.route("/createform").post(CreateForm)
-formRouter.route("/submit").post(validate,RecordSubmission)
+formRouter.route("/submit/:formid").post(validate,RecordSubmission)
 
 
 
