@@ -59,7 +59,7 @@ function createDyanmicSchemaValidation(requestBody){
         if(fieldName.includes('text'))
         {
         //NOT GIVING MINIMUM VALUE  FOR WRITE NOW
-        schemaRules[fieldName]=joi.string().max(200)
+        schemaRules[fieldName]=joi.string().max(800)
         }
         if(fieldName.includes('number'))
         {
@@ -108,6 +108,8 @@ function validate(req,res,next) {
     let requestBody=req.body
     let formSchema=createDyanmicSchemaValidation(requestBody)
     let {error,value}=formSchema.validate(req.body)  
+    console.log("valid values are",value);
+    
    if(error===undefined)
     {
         next()
