@@ -1,4 +1,14 @@
-TODO:
-
+TODO: 1 AUGUST
 [√] add pattern to detect only allowed block field types not everyone
-[ ] we have to add these fields inside joi as to check there value as custom field
+[√] we have to add these fields inside joi as to check there value as custom field
+
+TODO: 2 AUGUST
+// [ ]  verify phone number,country code reality
+[√] modify submission schema 
+[√] save submission form record in database
+[√] write notify email service to the register user email for submissions
+[ ] sanitize input which come from frontend
+[ ] extract email data and add for them to send email
+[ ] avoid same field repetition issues
+[ ] work on select custom block
+
