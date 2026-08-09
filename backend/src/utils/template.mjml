@@ -1,0 +1,91 @@
+<mjml>
+    <mj-body background-color="#ffffff">
+      <mj-section>
+         <mj-column>
+             <mj-image src="https://png.pngtree.com/element_our/20190530/ourmid/pngtree-shuffle-icon-image_1257310.jpg" alt="formsavelogo" width="30px" />
+             <mj-text align="center">
+                <mj-head>
+                    FormSave
+                </mj-head>
+             </mj-text>
+         </mj-column>
+      </mj-section>
+      <mj-section>
+      
+      <mj-column>
+        <mj-text>
+            <mj-head>
+                NEW FORM SUBMISSION:CONTACT US FORM
+            </mj-head>
+        </mj-text>
+        <mj-text>
+            You have received a new submisson here are details
+        </mj-text>
+      </mj-column>
+      </mj-section>
+      <mj-section>
+        <mj-column>
+            <mj-table>
+                <tr style="border:1px solid black;">
+                <td style="background:gray;padding:8px;">
+                Name
+                </td>
+                <td style="background:white;padding:14px">
+                Rahul Kruipa
+                </td>
+                </tr>
+                <tr style="border:1px solid black;">
+                <td style="background:gray;padding:6px;">
+                Email
+                </td>
+                <td style="background:white;padding:6px">
+                 rahul@gmail.com
+                </td>
+                </tr>
+                <tr style="border:1px solid black;">
+                <td style="background:gray;padding:6px;">
+                Rating
+                </td>
+                <td style="background:white;padding:6px">
+                 4/5
+                </td>
+                </tr>
+                <tr style="border:1px solid black;">
+                <td style="background:gray;padding:6px;">
+                Message
+                </td>
+                <td style="background:white;padding:6px">
+                 I am interested in learning more 
+                 future things
+                </td>
+                </tr>
+            </mj-table>
+        </mj-column>
+      </mj-section>
+      <mj-section>
+        <mj-column>
+        <mj-button>
+            View in Dashboard
+        </mj-button>
+        </mj-column>
+      </mj-section>
+      <mj-section>
+        <mj-column>
+            <mj-text align="center"> 
+            &#169 2026  formsave All rights reserved
+            </mj-text>
+            <mj-navbar>
+                <mj-navbar-link href="" >
+                    Dashboard
+                </mj-navbar-link>
+                <mj-navbar-link href="" >
+                    Privacy Policy
+                </mj-navbar-link>
+                <mj-navbar-link href="" >
+                    Terms And conditions
+                </mj-navbar-link>
+            </mj-navbar>
+        </mj-column>
+      </mj-section>
+    </mj-body>
+</mjml>
