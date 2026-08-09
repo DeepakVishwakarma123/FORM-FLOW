@@ -68,6 +68,14 @@ let RecordSubmission=asyncHandler(
 
         let {formid}=req.query
 
+        //let first find out of form whether it exist in our database or not otherwise the entries are get wrong show
+        //if not exist then we can,t allow user to be in our system to write a data to database
+        let isFormExist=await forms.findOne({formId:formid})
+        if(isFormExist===null)
+        {
+            res.status(404).send("<h1>FORM ID NOT FOUND INVALID FORMID PLEASE USE VALID FORM ID  TO SUBMIT FORM TO OUR SERVICE</h1>")
+            return
+        }
 
         let userData=req.body
         let fieldKeysArray=Object.keys(userData)
