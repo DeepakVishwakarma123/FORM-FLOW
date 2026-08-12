@@ -19,8 +19,8 @@ NEW FORM SUBMISSION:${formTitle}
     //data to send in email is will become a main template things and for forcing we only send a user 
     //less than or equal to 5 fields
     let dataToSendINEmailFieldKeysArray=Object.keys(dataToSendINEmail)
-    if(dataToSendINEmailFieldKeysArray.length<=5)
-    {
+    
+    // don,t care about field limit process each field in submission
         //pass those data into mjml table codes
         for(let FieldKeyName of dataToSendINEmailFieldKeysArray)
         {
@@ -30,17 +30,18 @@ NEW FORM SUBMISSION:${formTitle}
             let tableRowWithUserData=dyanmicRowLiteralmjmlCodeReturn(fieldName,value)
             emptyTemplateLiteral+=tableRowWithUserData
         }      
-    }
+    
     let mjmlTableStructureCode=` <mj-table>
                                   ${emptyTemplateLiteral}  
                                                         </mj-table>`
    //pass this following htmlString into node mailer to send mails
    let {html:htmlString,errors:mjmlcompileError}=await DynamicFieldValueAdderINmjmlCode(mjmlFormTitleCode,mjmlTableStructureCode) 
-   console.log(htmlString);
-   console.log(mjmlcompileError);
+//    console.log(htmlString);
+//    console.log(mjmlcompileError);
+  
+  return htmlString
    
-   
-   sendmail(htmlString)
+//    sendmail(htmlString)
 }
 
 
@@ -122,11 +123,10 @@ let mjmlWholeCode=`
 </mjml>
       `
 let htmlString=await mjml2html(mjmlWholeCode)
-console.log("teh curretn things is now",htmlString);
+// console.log("teh curretn things is now",htmlString);
 
 return htmlString
 }
 
 
-
-      convertMJML2HTML({name:"Adarsh Vishwakarma","email":"deepakvishwakarmajs@gmail.com","message":"hello i need to an new website reach out me!!","rating":"4/5"},"contact work")
+export default convertMJML2HTML
