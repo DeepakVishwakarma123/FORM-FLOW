@@ -24,7 +24,8 @@ async function aggregationPipelineFactory(submissionid) {
                                }
                                   ]
                               )
-    
+
+                              
             let submissionRecordDoc=senderBasicRecordArray[0]
        //remove the form id field as schema doesn,t has show i think you have to re run code for first time for propert setups to avoid old setups
        let formInformationDataArray=await forms.aggregate(
@@ -45,9 +46,8 @@ async function aggregationPipelineFactory(submissionid) {
        )
 
        let formRecordObject=formInformationDataArray[0]
-       console.log(formRecordObject);
        
-
+   
        //this pipeline has some problems and need to be fixed soon!!!
        let userinfoArray=await users.aggregate(
         [
@@ -65,16 +65,14 @@ async function aggregationPipelineFactory(submissionid) {
        let formtitle=formRecordObject["formname"]
        let emailId=userObject.emailId
         
-       console.log("userinfo arrya",userinfoArray);
        
-       console.log("hello",userObject);
        
        console.log("the email id is",emailId);
        
     
-       let htmlString=convertMJML2HTML(senderDetailsObject,formtitle)
+       let htmlString=await convertMJML2HTML(senderDetailsObject,formtitle)
 
-    //    sendmail(htmlString,emailId)    
+       sendmail(htmlString,emailId)    
     }
          catch (err) {
             console.log("somethign happended",err);
@@ -84,6 +82,8 @@ async function aggregationPipelineFactory(submissionid) {
       
 
 }
+
+
 
 export {aggregationPipelineFactory}
 
