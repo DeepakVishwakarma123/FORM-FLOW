@@ -11,9 +11,6 @@ const formSchema=new Schema(
         userId:{
             type:Schema.Types.ObjectId,
             ref:"users"
-        },
-        formId:{
-            type:String
         }
     }
 )
@@ -22,5 +19,5 @@ const forms=new mongoose.model("form",formSchema)
 
 export default forms
 
-//how we store forms data basiclly
+
 
