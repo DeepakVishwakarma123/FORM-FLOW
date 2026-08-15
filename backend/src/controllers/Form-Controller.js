@@ -90,19 +90,27 @@ let RecordSubmission=asyncHandler(
         {
             //let split the array by delimeter - 
             let splittingFieldNameArray=fieldName.split("-")
-
+            let [ffValue,blockTypeName,customFieldName]=splittingFieldNameArray
 
           /*verfiy fieldName exist with form id
           if yes then map old to new doc value
           otherwise create both docs in collections
           */ 
            // bug in the below function fix it soon to avoid measure issues
+          
+            console.log("the fieldName is now",fieldName);
+            console.log("the spilltedArray",splittingFieldNameArray);
+            console.log("the form id is something",formid);
+            
+            let objectFormId=new mongoose.Types.ObjectId(formid)
+            
+            
            let isCustomFieldExistDoc=await customFields.findOne(
-                {
-                    fieldName:fieldName,
-                    blockType:splittingFieldNameArray[1],
-                    formid:new mongoose.Types.ObjectId(formid)
-                }
+            {
+            fieldName:customFieldName,
+            blockType:blockTypeName,
+            formid:objectFormId
+            }
             )
 
             console.log("hello custom filedoc ki kya value hai",isCustomFieldExistDoc);
@@ -120,9 +128,9 @@ let RecordSubmission=asyncHandler(
             else{
             let customFieldDoc=await customFields.create(
                 {
-                    fieldName:splittingFieldNameArray[2],
-                    blockType:splittingFieldNameArray[1],
-                    formid:new mongoose.Types.ObjectId(formid)
+                    fieldName:customFieldName,
+                    blockType:blockTypeName,
+                    formid:objectFormId
                 }
             )
 
