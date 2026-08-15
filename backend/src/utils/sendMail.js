@@ -23,7 +23,7 @@ const transporter = nodemailer.createTransport({
 
 async function sendmail(htmlString,receiverEmailId) {
   const options = {
-  from: "notify@formsave.store",
+  from: "notify@example.com",
   to: `${receiverEmailId}`,
   subject: 'new submission',
   html: htmlString,
