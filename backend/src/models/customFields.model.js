@@ -18,6 +18,6 @@ let cutomFieldSchema=mongoose.Schema(
     }
 )
 
-let customFields=mongoose.model(cutomFieldSchema)
+let customFields=mongoose.model("customField",cutomFieldSchema)
 
 export default customFields
