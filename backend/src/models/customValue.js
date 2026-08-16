@@ -14,6 +14,10 @@ let valueCustomSchema=mongoose.Schema(
         subid:{
             type:Schema.Types.ObjectId,
             ref:"formrecords"
+        },
+        pid:{
+            type:Schema.Types.ObjectId,
+            ref:"customFields"
         }
     }
 )
