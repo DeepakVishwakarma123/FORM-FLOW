@@ -8,11 +8,11 @@ dotenv.config({path:"\.env"})
 //add original smtp server address to work with it
 const transporter = nodemailer.createTransport({
   host: process.env.host,
-  port: 465,
+  port: process.env.port,
   secure: true,
   auth: {
-    user: process.env.demouser,
-    pass: process.env.pass
+    user: process.env.user,
+    pass: process.env.Password
   },
 });
 
@@ -23,7 +23,7 @@ const transporter = nodemailer.createTransport({
 
 async function sendmail(htmlString,receiverEmailId) {
   const options = {
-  from: "notify@example.com",
+  from: "notify@",
   to: `${receiverEmailId}`,
   subject: 'new submission',
   html: htmlString,
