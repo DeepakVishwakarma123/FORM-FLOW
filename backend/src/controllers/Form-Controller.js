@@ -104,7 +104,6 @@ let RecordSubmission=asyncHandler(
             
             let objectFormId=new mongoose.Types.ObjectId(formid)
             
-            
            let isCustomFieldExistDoc=await customFields.findOne(
             {
             fieldName:customFieldName,
@@ -121,7 +120,8 @@ let RecordSubmission=asyncHandler(
                 {
                     value:userData[fieldName],
                     customFieldId:isCustomFieldExistDoc["_id"],
-                    subid:new mongoose.Types.ObjectId(submissionid)
+                    subid:new mongoose.Types.ObjectId(submissionid),
+                    pid:new mongoose.Types.ObjectId(isCustomFieldExistDoc._id)
                 }
             )    
             }
@@ -138,7 +138,8 @@ let RecordSubmission=asyncHandler(
                 {
                     value:userData[fieldName],
                     customFieldId:customFieldDoc["_id"],
-                    subid:submissionid
+                    subid:submissionid,
+                    pid:new mongoose.Types.ObjectId(customFieldDoc._id)
                 }
             )
             }
@@ -148,7 +149,7 @@ let RecordSubmission=asyncHandler(
 
         res.status(200).send("<h1> form submitted succefully </h1>")
         
-        // aggregationPipelineFactory(submissionid)
+        aggregationPipelineFactory(submissionid)
         
     }
 )   
