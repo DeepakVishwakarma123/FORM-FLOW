@@ -6,11 +6,18 @@ import sendmail from "./sendMail.js"
 
 
 
+
+
+
+
+async function convertMJML2HTML(dataToSendINEmail,formTitle) {
+       
 //this will hold all rows entried inside it as variable 
 let emptyTemplateLiteral=`
 
 `
-async function convertMJML2HTML(dataToSendINEmail,formTitle) {
+console.log("the empty templated literal is now bros",emptyTemplateLiteral);
+    
     let mjmlFormTitleCode=`
  <mj-head>
 NEW FORM SUBMISSION:${formTitle}
@@ -38,7 +45,8 @@ NEW FORM SUBMISSION:${formTitle}
    let {html:htmlString,errors:mjmlcompileError}=await DynamicFieldValueAdderINmjmlCode(mjmlFormTitleCode,mjmlTableStructureCode) 
 //    console.log(htmlString);
 //    console.log(mjmlcompileError);
-  
+
+
   return htmlString
    
 //    sendmail(htmlString)
