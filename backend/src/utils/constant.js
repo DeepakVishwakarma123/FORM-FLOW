@@ -3,7 +3,7 @@ import parsePhoneNumberFromString from "libphonenumber-js";
 import joi from "joi";
 
 
-let validBlockTypes=["text","url","date","country","email","phone","number","rating"]
+let validBlockTypes=["text","url","select","date","country","email","phone","number","rating"]
 
 //the alpha2 code object contaisn iso 2 alpah code as key and iso 3 alpah code as value
 let alpha2CodesObject=countries.getAlpha2Codes()
@@ -20,7 +20,6 @@ let alpha2CodesObject=countries.getAlpha2Codes()
             }
             return helpers.error("invalid phone number structure")
         }
-
 
 
 function filterArrayBased(ArrayTobefilter){
@@ -71,7 +70,8 @@ return [senderKeyArray,remainingFieldKeysArray]
             {
                 "date.less":"CAN NOT ALLOWED TO ADD DATE GREATER THAN 2060-01-01"
             }
-        )
+        ),
+        "select":joi.string().max(50)
     }
   
 
