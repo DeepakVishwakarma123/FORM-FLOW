@@ -1,7 +1,7 @@
 import  express from "express";
 import dotenv from "dotenv";
 import cors from "cors"
-
+import cookieParser from "cookie-parser"
 dotenv.config({path:"\.env"})
 
 //express configuration
@@ -22,9 +22,15 @@ app.use(cors({
     credentials:true
 }))
 
+app.use(
+    cookieParser()
+)
+
 
 import formRouter from "./routes/Form-Routes.js";
+import authRouter from "./routes/Auth-routes.js";
 app.use("/formflow",formRouter)
+app.use("/auth",authRouter)
 
 
 export default app
