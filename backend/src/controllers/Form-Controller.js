@@ -13,14 +13,14 @@ let CreateForm=asyncHandler(
     async function (req,res) {
 
         // user id will come inside request object
-        // let userIDinrequest=req.userPayloadData
+        let userID=req.userId
         
         //extracting body data which comes in request
-        let {formName,userId}=req.body   
+        let {formName}=req.body   
 
         let savedDocument=await forms.create({
               formname:formName,
-              userId:userId
+              userId:userID
         })
 
        
