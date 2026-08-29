@@ -6,6 +6,7 @@ import {aggregationPipelineFactory} from "../utils/AggretionPipeline.js";
 import customValues from "../models/customValue.js";
 import customFields from "../models/customFields.model.js";
 import { filterArrayBased } from "../utils/constant.js";
+import captchas from "../models/captcha-models.js";
 
 
 //create form controller
@@ -23,8 +24,17 @@ let CreateForm=asyncHandler(
               userId:userID
         })
 
-       
+        //setting captcha to nocaptcha as default configure mode 
+        //the no captcha field is has isActive field which is set default true 
+        //so we just attached it formid only
+        let createdCaptchaDoc=await captchas.create(
+            {
+               formid:new mongoose.Types.ObjectId(savedDocument._id)
+            }
+        )
 
+        
+    
         // assuming save document is truthy value show it get send it to frontend as a response 
         if(savedDocument)
         {
