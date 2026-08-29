@@ -7,7 +7,6 @@ import { validCapthcaTypes } from "../utils/constant.js";
 
 let captchaSchema=mongoose.Schema(
     {
-        captcha:{
             hcaptcha:{
                   secret_key:{
                     type:String,
@@ -43,8 +42,7 @@ let captchaSchema=mongoose.Schema(
                     type:Boolean,
                     default:true
                 }
-            }
-        },
+            },
         formid:{
             type:Schema.Types.ObjectId,
             ref:"forms"
