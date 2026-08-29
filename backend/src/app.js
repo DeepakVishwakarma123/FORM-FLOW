@@ -29,8 +29,10 @@ app.use(
 
 import formRouter from "./routes/Form-Routes.js";
 import authRouter from "./routes/Auth-routes.js";
+import { captchaRouter } from "./routes/Captcha-route.js";
 app.use("/formflow",formRouter)
 app.use("/auth",authRouter)
+app.use("/captcha",captchaRouter)
 
 
 export default app
