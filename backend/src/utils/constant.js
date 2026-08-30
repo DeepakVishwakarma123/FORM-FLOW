@@ -102,4 +102,4 @@ let captchaSecretVerify=async function (remoteAPIURL,captchaToken,secret_key) {
 
         
 
-export  {validCapthcaTypes,recaptchaSiteVerifyUrl,hcaptchaSiteVerfiyUrl,cloudFlareTurnStileVerifyUrl,verifyPhoneNumberStructure,validBlockTypes,Alpha2ISOCountryCode,customBlocksJoiSchemaRules,filterArrayBased,schemaRules}
+export  {captchaSecretVerify,validCapthcaTypes,recaptchaSiteVerifyUrl,hcaptchaSiteVerfiyUrl,cloudFlareTurnStileVerifyUrl,verifyPhoneNumberStructure,validBlockTypes,Alpha2ISOCountryCode,customBlocksJoiSchemaRules,filterArrayBased,schemaRules}
