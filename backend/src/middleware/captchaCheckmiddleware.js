@@ -4,6 +4,7 @@ agar hai toh usko appropriate hume middleware ko pass kar dena hai based
 on it
 */
 
+import mongoose from "mongoose";
 import captchas from "../models/captcha-models.js";
 import asyncHandler from "../utils/Async-Handler.js";
 import { captchaSecretVerify, cloudFlareTurnStileVerifyUrl, hcaptchaSiteVerfiyUrl, recaptchaSiteVerifyUrl } from "../utils/constant.js";
@@ -11,11 +12,11 @@ import { captchaSecretVerify, cloudFlareTurnStileVerifyUrl, hcaptchaSiteVerfiyUr
 
 let captchaCheckmiddleware=asyncHandler(
 async function (req,res,next) {
-    let formdid=req.params
-
+    let {formid}=req.params
+    let formidvalidform=new mongoose.Types.ObjectId(formid)
     let nocaptchaSearch=await captchas.findOne(
         {
-            formid:formid,
+            formid:formidvalidform,
             "nocaptcha.isActive":true
         }
     )
@@ -29,7 +30,7 @@ async function (req,res,next) {
 
     let hcaptchaSearch=await captchas.findOne(
         {
-            formid:formid,
+            formid:formidvalidform,
             "hcaptcha.isActive":true
         }
     )
@@ -38,7 +39,8 @@ async function (req,res,next) {
     {
       let secret_key=hcaptchaSearch.hcaptcha.secret_key
       let hcaptchaResponseToken=req.body["h-captcha-response"]
-      let response=captchaSecretVerify(hcaptchaSiteVerfiyUrl,hcaptchaResponseToken,secret_key)
+      let responsePlain=await captchaSecretVerify(hcaptchaSiteVerfiyUrl,hcaptchaResponseToken,secret_key)
+      let response=await responsePlain.json()
       if(response.length===1)
        {
         res.status('408').json(
@@ -51,7 +53,8 @@ async function (req,res,next) {
          //just verfiy success field whats' it status 
          console.log(response);
           let success=response.success
-         if(success)
+          let botscore=response.score
+         if(success===true && botscore>0.5)
          {
             next()
          }
@@ -69,7 +72,7 @@ async function (req,res,next) {
 
     let recaptchaSearch=await captchas.findOne(
         {
-            formid:formid,
+            formid:formidvalidform,
             "recaptcha.isActive":true
         }
     )
@@ -78,7 +81,8 @@ async function (req,res,next) {
     {
       let secret_key=recaptchaSearch.recaptcha.secret_key
       let recaptchaResponseToken=req.body["g-recaptcha-response"]
-      let response=captchaSecretVerify(recaptchaSiteVerifyUrl,recaptchaResponseToken,secret_key)
+      let responsePlain=await captchaSecretVerify(recaptchaSiteVerifyUrl,recaptchaResponseToken,secret_key)
+      let response=await responsePlain.json()
       if(response.length===1)
        {
         res.status('408').json(
@@ -91,7 +95,8 @@ async function (req,res,next) {
          //just verfiy success field whats' it status 
          console.log(response);
          let success=response.success
-         if(success)
+         let botscore=response.score
+         if(success===true && botscore>0.5)
          {
             next()
          }
@@ -119,7 +124,8 @@ async function (req,res,next) {
     {
       let secret_key=turnstilecaptchaSearch.turnstile.secret_key
       let turnstilecaptchaResponseToken=req.body["cf-turnstile-response"]
-      let response=captchaSecretVerify(cloudFlareTurnStileVerifyUrl,turnstilecaptchaResponseToken,secret_key)
+      let responsePlain=await captchaSecretVerify(cloudFlareTurnStileVerifyUrl,turnstilecaptchaResponseToken,secret_key)
+      let response=await responsePlain.json()
       if(response.length===1)
        {
         res.status('408').json(
@@ -132,7 +138,8 @@ async function (req,res,next) {
          //just verfiy success field whats' it status 
          console.log(response);
           let success=response.success
-         if(success)
+          let score=response.score
+         if(success===true && score>0.5)
          {
             next()
          }
