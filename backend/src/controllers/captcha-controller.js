@@ -104,7 +104,7 @@ let activateSpeficCapthca=asyncHandler(
      let nocaptchaUpdatesettofalse=await captchas.findOneAndUpdate(
             {
             "nocaptcha.isActive":true,
-            formid:formdid
+            formid:formid
             },
             {
                 $set:{
@@ -115,7 +115,7 @@ let activateSpeficCapthca=asyncHandler(
  let hcaptchaUpdatesettofalse=await captchas.findOneAndUpdate(
             {
             "hcaptcha.isActive":true,
-            formid:formdid
+            formid:formid
             },
             {
                 $set:{
@@ -126,7 +126,7 @@ let activateSpeficCapthca=asyncHandler(
  let turnstileUpdatesettofalse=await captchas.findOneAndUpdate(
             {
             "turnstile.isActive":true,
-            formid:formdid
+            formid:formid
             },
             {
                 $set:{
