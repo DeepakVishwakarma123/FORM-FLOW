@@ -4,13 +4,15 @@ import joi from "joi";
 
 
 let validBlockTypes=["text","url","select","date","country","email","phone","number","rating"]
-
+let validCapthcaTypes=["hcapthca","turnstile","recaptcha"]
 //the alpha2 code object contaisn iso 2 alpah code as key and iso 3 alpah code as value
 let alpha2CodesObject=countries.getAlpha2Codes()
 
  let Alpha2ISOCountryCode=Object.keys(alpha2CodesObject)
   
-  
+  let hcaptchaSiteVerfiyUrl="https://api.hcaptcha.com/siteverify"
+  let cloudFlareTurnStileVerifyUrl="https://challenges.cloudflare.com/turnstile/v0/siteverify" 
+  let recaptchaSiteVerifyUrl=""
   
   let verifyPhoneNumberStructure=(value,helpers) => {
             const phoneObject=parsePhoneNumberFromString(value)
@@ -75,9 +77,29 @@ return [senderKeyArray,remainingFieldKeysArray]
     }
   
 
-
+let captchaSecretVerify=async function (remoteAPIURL,captchaToken,secret_key) {
+    // let do the post request to remoteAPI URL
+     try {
+        let response=await fetch(`${remoteAPIURL}`,{
+        method:"POST",
+        headers: {
+					"Content-Type": "application/json",
+				},
+        body:JSON.stringify(
+            {
+                secret:secret_key,
+                response:captchaToken
+            }
+        )
+      })
+      return response   
+     } catch (error) {
+        console.log("error occured during captcha verfication",error)
+        return [error]
+     }
+}
 
 
         
 
-export  {verifyPhoneNumberStructure,validBlockTypes,Alpha2ISOCountryCode,customBlocksJoiSchemaRules,filterArrayBased,schemaRules}
+export  {validCapthcaTypes,recaptchaSiteVerifyUrl,hcaptchaSiteVerfiyUrl,cloudFlareTurnStileVerifyUrl,verifyPhoneNumberStructure,validBlockTypes,Alpha2ISOCountryCode,customBlocksJoiSchemaRules,filterArrayBased,schemaRules}
