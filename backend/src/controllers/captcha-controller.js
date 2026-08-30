@@ -8,7 +8,7 @@ import captchas from "../models/captcha-models.js";
 // for now we are going with turnstile only
 
 let Addcaptcha=asyncHandler(
-    async function (req,res,next) {
+    async function (req,res) {
         //hume yeh fields body main milengi
         let {formid,captchaType,captchaSecret}=req.body
 
@@ -77,4 +77,118 @@ let Addcaptcha=asyncHandler(
     }
 )
 
-export {Addcaptcha}
+// activate spefic captcha mode the above same code get duplicated with some new fiedl updation
+let activateSpeficCapthca=asyncHandler(
+
+      async function (req,res) {
+        //hume yeh fields body main milengi
+        let {formid,captchaType}=req.body
+
+
+        /*
+        kahani twist yeh hai ki jo captcha activated hai already usko false bhi karna padega
+        like jaise is case main no captcha already tha to use pehle false karna padega 
+        per aisa nhi hai ki her baar baar nocaptcha hi rahega maan lo ek baar
+        turnstile active hua then usne dusra kuch again acive karna chaha toh
+        us turnstile active hai to hume use band karna padega 
+        */
+
+        // pehel hume true wale captcha ko false set karna hai then 
+        //baki jo activate hona chhat hai use true set kar do 
+        //abhi ke liye hum spefic her ko database main call karke hume use false set kareneg agar vo milta hai toh
+
+        /*
+        main yaha pe kuch built in methods se niaklane wala huu us spefic object ko
+        */
+
+     let nocaptchaUpdatesettofalse=await captchas.findOneAndUpdate(
+            {
+            "nocaptcha.isActive":true,
+            formid:formdid
+            },
+            {
+                $set:{
+                    "nocaptcha.isActive":false 
+                }
+            }
+        )
+ let hcaptchaUpdatesettofalse=await captchas.findOneAndUpdate(
+            {
+            "hcaptcha.isActive":true,
+            formid:formdid
+            },
+            {
+                $set:{
+                    "hcaptcha.isActive":false 
+                }
+            }
+        )
+ let turnstileUpdatesettofalse=await captchas.findOneAndUpdate(
+            {
+            "turnstile.isActive":true,
+            formid:formdid
+            },
+            {
+                $set:{
+                    "turnstile.isActive":false 
+                }
+            }
+        )
+
+       if(captchaType==="turnstile")
+       {
+        //do something
+        let updatedDocument=await captchas.findOneAndUpdate(
+        {formid:formid},
+        {
+             $set:{
+                 "turnstile.isActive":true
+               }
+        },
+        {new:true}
+       )
+       }
+       else if(captchaType==="hcaptcha")
+       {
+        //do something
+        let updatedDocument=await captchas.findOneAndUpdate(
+        {formid:formid},
+        {
+             $set:{
+                 "hcaptcha.isActive":true
+               }
+        },
+        {new:true}
+       )
+       }
+       else if(captchaType==="recaptcha")
+       {
+        //do something
+          let updatedDocument=await captchas.findOneAndUpdate(
+        {formid:formid},
+        {
+             $set:{
+                 "recaptcha.isActive":true
+               }
+        },
+        {new:true}
+       )
+       }
+       else{
+        res.status(422).json(
+            {
+                "message":`invalid capthca mode not supported ${captchaType}`
+            }
+        )
+        return
+       }
+
+       res.status(201).json(
+        {
+            message:`${captchaType} activated succesfully`
+        }
+       )
+    }
+)
+
+export {Addcaptcha,activateSpeficCapthca}
