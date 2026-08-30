@@ -17,17 +17,58 @@ let Addcaptcha=asyncHandler(
         toh main formid se unhe get karunga and specfic captcha type wali value ko update 
         kar dunga
         */
-       let captchaTypeDocHolder={
-        captchaType
-       }
-       let updatedDocument=await captchas.findOneAndUpdate(
+       if(captchaType==="turnstile")
+       {
+        //do something
+        let updatedDocument=await captchas.findOneAndUpdate(
         {formid:formid},
         {
-             "captchaType.secret_key":captchaSecret
+             $set:{
+                 "turnstile.secret_key":captchaSecret
+               }
         },
         {new:true}
        )
 
+       }
+       else if(captchaType==="hcaptcha")
+       {
+        //do something
+        let updatedDocument=await captchas.findOneAndUpdate(
+        {formid:formid},
+        {
+             $set:{
+                 "hcaptcha.secret_key":captchaSecret
+               }
+        },
+        {new:true}
+       )
+       }
+       else if(captchaType==="recaptcha")
+       {
+        //do something
+          let updatedDocument=await captchas.findOneAndUpdate(
+        {formid:formid},
+        {
+             $set:{
+                 "recaptcha.secret_key":captchaSecret
+               }
+        },
+        {new:true}
+       )
+       }
+       else{
+        res.status(422).json(
+            {
+                "message":`${captchaType} is not a valid option only supported captchas are turnstile,recapthca,hcaptcha feel free to contact us`
+            }
+        )
+        return
+       }
+
+       /*agar upar diye gye sare message option fail nhi honge i mean
+       agar koi bhi conditin if ya else ki agar satisfied hogi toh us case main yeh 
+       automatically response main chala jayega*/
        res.status(201).json(
         {
             message:`${captchaType} secret Key Succesfully add`
