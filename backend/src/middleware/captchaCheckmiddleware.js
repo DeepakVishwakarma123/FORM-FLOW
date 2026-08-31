@@ -39,6 +39,10 @@ async function (req,res,next) {
     {
       let secret_key=hcaptchaSearch.hcaptcha.secret_key
       let hcaptchaResponseToken=req.body["h-captcha-response"]
+      console.log("the secret key is here",secret_key);
+      console.log("the token is here",hcaptchaResponseToken);
+      
+      
       let responsePlain=await captchaSecretVerify(hcaptchaSiteVerfiyUrl,hcaptchaResponseToken,secret_key)
       let response=await responsePlain.json()
       if(response.length===1)
@@ -139,7 +143,7 @@ async function (req,res,next) {
          console.log(response);
           let success=response.success
           let score=response.score
-         if(success===true && score>0.5)
+         if(success)
          {
             next()
          }
