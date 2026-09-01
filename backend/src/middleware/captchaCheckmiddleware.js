@@ -45,6 +45,10 @@ async function (req,res,next) {
       
       let responsePlain=await captchaSecretVerify(hcaptchaSiteVerfiyUrl,hcaptchaResponseToken,secret_key)
       let response=await responsePlain.json()
+      console.log("the body post status plain output is",responsePlain);
+      
+      console.log("the response is overall",response);
+      
       if(response.length===1)
        {
         res.status('408').json(
@@ -85,6 +89,8 @@ async function (req,res,next) {
     {
       let secret_key=recaptchaSearch.recaptcha.secret_key
       let recaptchaResponseToken=req.body["g-recaptcha-response"]
+      console.log("the recaptcharesponset token is something",recaptchaResponseToken);
+      
       let responsePlain=await captchaSecretVerify(recaptchaSiteVerifyUrl,recaptchaResponseToken,secret_key)
       let response=await responsePlain.json()
       if(response.length===1)
