@@ -39,16 +39,15 @@ async function (req,res,next) {
     {
       let secret_key=hcaptchaSearch.hcaptcha.secret_key
       let hcaptchaResponseToken=req.body["h-captcha-response"]
-      console.log("the secret key is here",secret_key);
+      console.log("the secret key is here ",secret_key);
+
+      console.log("  --   ")
+
+
       console.log("the token is here",hcaptchaResponseToken);
-      
-      
+          
       let responsePlain=await captchaSecretVerify(hcaptchaSiteVerfiyUrl,hcaptchaResponseToken,secret_key)
       let response=await responsePlain.json()
-      console.log("the body post status plain output is",responsePlain);
-      
-      console.log("the response is overall",response);
-      
       if(response.length===1)
        {
         res.status('408').json(
@@ -61,8 +60,7 @@ async function (req,res,next) {
          //just verfiy success field whats' it status 
          console.log(response);
           let success=response.success
-          let botscore=response.score
-         if(success===true && botscore>0.5)
+         if(success===true)
          {
             next()
          }
