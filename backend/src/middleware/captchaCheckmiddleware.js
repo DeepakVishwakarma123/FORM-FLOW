@@ -7,11 +7,11 @@ on it
 import mongoose from "mongoose";
 import captchas from "../models/captcha-models.js";
 import asyncHandler from "../utils/Async-Handler.js";
-import { captchaSecretVerify, cloudFlareTurnStileVerifyUrl, hcaptchaSiteVerfiyUrl, recaptchaSiteVerifyUrl } from "../utils/constant.js";
+import {hcaptchaSecretVerify, captchaSecretVerify, cloudFlareTurnStileVerifyUrl, hcaptchaSiteVerfiyUrl, recaptchaSiteVerifyUrl } from "../utils/constant.js";
 
 
 let captchaCheckmiddleware=asyncHandler(
-async function (req,res,next) {
+async function (req,res,next) {    
     let {formid}=req.params
     let formidvalidform=new mongoose.Types.ObjectId(formid)
     let nocaptchaSearch=await captchas.findOne(
@@ -39,15 +39,7 @@ async function (req,res,next) {
     {
       let secret_key=hcaptchaSearch.hcaptcha.secret_key
       let hcaptchaResponseToken=req.body["h-captcha-response"]
-      console.log("the secret key is here ",secret_key);
-
-      console.log("  --   ")
-
-
-      console.log("the token is here",hcaptchaResponseToken);
-          
-      let responsePlain=await captchaSecretVerify(hcaptchaSiteVerfiyUrl,hcaptchaResponseToken,secret_key)
-      let response=await responsePlain.json()
+      let response=await hcaptchaSecretVerify(hcaptchaResponseToken,secret_key)
       if(response.length===1)
        {
         res.status('408').json(
@@ -61,7 +53,7 @@ async function (req,res,next) {
          console.log(response);
           let success=response.success
          if(success===true)
-         {
+         {    
             next()
          }
          else{
