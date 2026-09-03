@@ -78,6 +78,11 @@ return [senderKeyArray,remainingFieldKeysArray]
   
 
 let captchaSecretVerify=async function (remoteAPIURL,captchaToken,secret_key) {
+
+    console.log("the captcha and respons token is now",secret_key);
+    console.log("cptcha token is now",captchaToken);
+    
+    
     // let do the post request to remoteAPI URL
      try {
         let response=await fetch(`${remoteAPIURL}`,{
@@ -92,7 +97,33 @@ let captchaSecretVerify=async function (remoteAPIURL,captchaToken,secret_key) {
             }
         )
       })
+
+      
       return response   
+     } catch (error) {
+        console.log("error occured during captcha verfication",error)
+        return [error]
+     }
+}
+
+
+
+let hcaptchaSecretVerify=async function (captchaToken,secret_key) {
+    const params=new URLSearchParams()
+    params.append('secret',secret_key)
+    params.append('response',captchaToken)
+
+    // let do the post request to remoteAPI URL
+     try {
+        let response=await fetch("https://api.hcaptcha.com/siteverify",{
+        method:"POST",
+        headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
+        body:params
+      })
+
+      return response.json()   
      } catch (error) {
         console.log("error occured during captcha verfication",error)
         return [error]
@@ -102,4 +133,4 @@ let captchaSecretVerify=async function (remoteAPIURL,captchaToken,secret_key) {
 
         
 
-export  {captchaSecretVerify,validCapthcaTypes,recaptchaSiteVerifyUrl,hcaptchaSiteVerfiyUrl,cloudFlareTurnStileVerifyUrl,verifyPhoneNumberStructure,validBlockTypes,Alpha2ISOCountryCode,customBlocksJoiSchemaRules,filterArrayBased,schemaRules}
+export  {hcaptchaSecretVerify,captchaSecretVerify,validCapthcaTypes,recaptchaSiteVerifyUrl,hcaptchaSiteVerfiyUrl,cloudFlareTurnStileVerifyUrl,verifyPhoneNumberStructure,validBlockTypes,Alpha2ISOCountryCode,customBlocksJoiSchemaRules,filterArrayBased,schemaRules}
