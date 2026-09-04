@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>reCAPTCHA demo: Simple page</title>
+    <script src="https://www.google.com/recaptcha/enterprise.js" async defer></script>
+  </head>
+  <body>
+      <!-- add form save endpoint in  below form and add you site data key 
+         upload secret key with form setting in formsave page to work ensure captcha
+         to work propery and don,t forget to activate captcha 
+         add valid name attribute format which form save expect the at backend-->
+    <form action="" method="POST">
+        <label for="">Name</label>
+        <input type="text" placeholder="enter your name">
+        <div class="g-recaptcha" data-sitekey=""></div>
+      <br/>
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>
