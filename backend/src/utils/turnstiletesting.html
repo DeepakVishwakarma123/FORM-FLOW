@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cloudflare turnstile</title>
+    <script
+	src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+	async
+	defer
+></script>
+</head>
+<body>
+    <!-- add form save endpoint in  below form and add you site data key 
+         upload secret key with form setting in formsave page to work ensure captcha
+         to work propery and don,t forget to activate captcha -->
+     <form action="" method="post">
+        <label for="">Name</label>
+        <input type="text" placeholder="enter your name" name="ff-text-feedback">
+        <div class="cf-turnstile" data-sitekey=""></div>
+        <input type="submit">
+     </form>
+</body>
+</html>
