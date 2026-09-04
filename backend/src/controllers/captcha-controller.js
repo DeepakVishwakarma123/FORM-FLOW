@@ -135,6 +135,18 @@ let activateSpeficCapthca=asyncHandler(
             }
         )
 
+         let recaptchaUpdatesettofalse=await captchas.findOneAndUpdate(
+            {
+            "recaptcha.isActive":true,
+            formid:formid
+            },
+            {
+                $set:{
+                    "recaptcha.isActive":false 
+                }
+            }
+        )
+
        if(captchaType==="turnstile")
        {
         //do something
@@ -169,6 +181,18 @@ let activateSpeficCapthca=asyncHandler(
         {
              $set:{
                  "recaptcha.isActive":true
+               }
+        },
+        {new:true}
+       )
+       }else if(captchaType==="nocaptcha")
+       {
+        //do something
+          let updatedDocument=await captchas.findOneAndUpdate(
+        {formid:formid},
+        {
+             $set:{
+                 "nocaptcha.isActive":true
                }
         },
         {new:true}
