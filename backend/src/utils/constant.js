@@ -12,7 +12,7 @@ let alpha2CodesObject=countries.getAlpha2Codes()
   
   let hcaptchaSiteVerfiyUrl="https://api.hcaptcha.com/siteverify"
   let cloudFlareTurnStileVerifyUrl="https://challenges.cloudflare.com/turnstile/v0/siteverify" 
-  let recaptchaSiteVerifyUrl=""
+  let recaptchaSiteVerifyUrl="https://www.google.com/recaptcha/api/siteverify"
   
   let verifyPhoneNumberStructure=(value,helpers) => {
             const phoneObject=parsePhoneNumberFromString(value)
@@ -77,45 +77,14 @@ return [senderKeyArray,remainingFieldKeysArray]
     }
   
 
-let captchaSecretVerify=async function (remoteAPIURL,captchaToken,secret_key) {
-
-    console.log("the captcha and respons token is now",secret_key);
-    console.log("cptcha token is now",captchaToken);
-    
-    
-    // let do the post request to remoteAPI URL
-     try {
-        let response=await fetch(`${remoteAPIURL}`,{
-        method:"POST",
-        headers: {
-					"Content-Type": "application/json",
-				},
-        body:JSON.stringify(
-            {
-                secret:secret_key,
-                response:captchaToken
-            }
-        )
-      })
-
-      
-      return response   
-     } catch (error) {
-        console.log("error occured during captcha verfication",error)
-        return [error]
-     }
-}
-
-
-
-let hcaptchaSecretVerify=async function (captchaToken,secret_key) {
+let formurlenocdecaptchaSecretVerify=async function (siteverifyUrl,captchaToken,secret_key) {
     const params=new URLSearchParams()
     params.append('secret',secret_key)
     params.append('response',captchaToken)
 
     // let do the post request to remoteAPI URL
      try {
-        let response=await fetch("https://api.hcaptcha.com/siteverify",{
+        let response=await fetch(`${siteverifyUrl}`,{
         method:"POST",
         headers: {
 					"Content-Type": "application/x-www-form-urlencoded",
@@ -133,4 +102,4 @@ let hcaptchaSecretVerify=async function (captchaToken,secret_key) {
 
         
 
-export  {hcaptchaSecretVerify,captchaSecretVerify,validCapthcaTypes,recaptchaSiteVerifyUrl,hcaptchaSiteVerfiyUrl,cloudFlareTurnStileVerifyUrl,verifyPhoneNumberStructure,validBlockTypes,Alpha2ISOCountryCode,customBlocksJoiSchemaRules,filterArrayBased,schemaRules}
+export  {formurlenocdecaptchaSecretVerify,validCapthcaTypes,recaptchaSiteVerifyUrl,hcaptchaSiteVerfiyUrl,cloudFlareTurnStileVerifyUrl,verifyPhoneNumberStructure,validBlockTypes,Alpha2ISOCountryCode,customBlocksJoiSchemaRules,filterArrayBased,schemaRules}
