@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nocaptcha demo test</title>
+</head>
+<body>
+    <!-- no captcha form 
+         don,t add any captcha widget unnecesary otherwise formsave blocks
+         field due to invalid response field of response token of captcha provider
+         if captcha is added it handled properly by formsave to complet form submission
+         in other scenario adding captcha and activated mode is no captcha 
+         then captcha hidden field due form save blocks form submissin we
+         not recommended to do this.
+         add form action end point and enjoy your submission and
+         ensure form should have valid supported name attributes
+         feel free to customize it. -->
+     <form action="" method="post">
+             <label for="">Name</label>
+             <input type="text" placeholder="enter your name" name="ff-text-lyrics">
+             <input type="submit">
+     </form>
+</body>
+</html>
