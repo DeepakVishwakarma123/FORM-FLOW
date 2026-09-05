@@ -7,12 +7,13 @@ on it
 import mongoose from "mongoose";
 import captchas from "../models/captcha-models.js";
 import asyncHandler from "../utils/Async-Handler.js";
-import {formurlenocdecaptchaSecretVerify, cloudFlareTurnStileVerifyUrl, hcaptchaSiteVerfiyUrl, recaptchaSiteVerifyUrl } from "../utils/constant.js";
+import {formurlenocdecaptchaSecretVerify,removeCapthcaHiddenFieldFromRequestBody, cloudFlareTurnStileVerifyUrl, hcaptchaSiteVerfiyUrl, recaptchaSiteVerifyUrl } from "../utils/constant.js";
 
 
 let captchaCheckmiddleware=asyncHandler(
 async function (req,res,next) {   
-         
+    
+    let body=req.body
     let {formid}=req.params
     let formidvalidform=new mongoose.Types.ObjectId(formid)
     let nocaptchaSearch=await captchas.findOne(
@@ -54,7 +55,8 @@ async function (req,res,next) {
           let success=response.success
          if(success===true)
          {    
-            console.log("hcaptcha",response); 
+            let anotherObject=removeCapthcaHiddenFieldFromRequestBody(body)
+            req.body=anotherObject            
             next()
          }
          else{
@@ -93,9 +95,9 @@ async function (req,res,next) {
          //just verfiy success field whats' it status 
          let success=response.success
          if(success===true)
-         {  
-            console.log("recaptcha",response);
-            
+         {       
+           let anotherObject=removeCapthcaHiddenFieldFromRequestBody(body)
+            req.body=anotherObject
             next()
          }
          else{
@@ -137,7 +139,8 @@ async function (req,res,next) {
           let success=response.success
          if(success)
          {
-           console.log("turnstile",response);
+            let anotherObject=removeCapthcaHiddenFieldFromRequestBody(body)
+            req.body=anotherObject
             next()
          }
          else{
