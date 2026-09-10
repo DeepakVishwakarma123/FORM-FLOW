@@ -23,24 +23,7 @@ let alpha2CodesObject=countries.getAlpha2Codes()
             return helpers.error("invalid phone number structure")
         }
 
-function removeCapthcaHiddenFieldFromRequestBody(reqbody)
-{       
-        let anotherObject={}
-        let keysBodyRequest=Object.keys(reqbody)
-        for(let i=0;i<keysBodyRequest.length;i++)
-        {   
-        let keyName=keysBodyRequest[i]
-        if(keyName==="g-recaptcha-response" || keyName==="h-captcha-response" || keyName==="cf-turnstile-response")
-        {
-            continue
-        }
-            anotherObject[keyName]=reqbody[keyName]
-        }
-        console.log("anotehr object is now",anotherObject);
-        
-      //   reqbody=anotherObject
-        return anotherObject
-}
+
 
 function filterArrayBased(ArrayTobefilter){
 
@@ -76,7 +59,10 @@ return [senderKeyArray,remainingFieldKeysArray]
         "ff-sender-postcode":joi.string().min(3).max(20),
         //HERE IS SOME KIND OF BUG IN THIS LINE WHY IT NOT STOPPING AT MAX LIMIT HIT
         "ff-sender-country":joi.string().max(2).valid(...Alpha2ISOCountryCode).messages({"any.only":"INVALID ISO ALPHA2 COUNTRY CODE"}),
-       "ff-sender-dob":joi.date().iso().less(new Date().toISOString()).messages({"date.less":`DATE OF BIRTH  SHOULD BE LESS THAN EQUAL TO  ${new Date().toLocaleString()}`})
+       "ff-sender-dob":joi.date().iso().less(new Date().toISOString()).messages({"date.less":`DATE OF BIRTH  SHOULD BE LESS THAN EQUAL TO  ${new Date().toLocaleString()}`}),
+       "h-captcha-response":joi.string().strip(true),
+       "g-recaptcha-response":joi.string().strip(true),
+       "cf-turnstile-response":joi.string().strip(true)
     }
 
    let customBlocksJoiSchemaRules={
@@ -118,6 +104,9 @@ let formurlenocdecaptchaSecretVerify=async function (siteverifyUrl,captchaToken,
 }
 
 
-        
+/* 
+this functinon is use as universal function 
+across each captcha to evalute their server site verify response
+by its success field value true or false */
 
-export  {removeCapthcaHiddenFieldFromRequestBody,formurlenocdecaptchaSecretVerify,validCapthcaTypes,recaptchaSiteVerifyUrl,hcaptchaSiteVerfiyUrl,cloudFlareTurnStileVerifyUrl,verifyPhoneNumberStructure,validBlockTypes,Alpha2ISOCountryCode,customBlocksJoiSchemaRules,filterArrayBased,schemaRules}
+export  {formurlenocdecaptchaSecretVerify,validCapthcaTypes,recaptchaSiteVerifyUrl,hcaptchaSiteVerfiyUrl,cloudFlareTurnStileVerifyUrl,verifyPhoneNumberStructure,validBlockTypes,Alpha2ISOCountryCode,customBlocksJoiSchemaRules,filterArrayBased,schemaRules}
