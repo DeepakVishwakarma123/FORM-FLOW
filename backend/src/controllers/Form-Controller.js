@@ -67,6 +67,16 @@ let RecordSubmission=asyncHandler(
         let {formid}=req.params
         let userData=req.body
         let fieldKeysArray=Object.keys(userData)
+
+        if(fieldKeysArray.length===0)
+        {
+            res.status(406).json(
+                {
+                    "message":"request is not processable please add valid name attribute in forms"
+                }
+            )
+        }
+        
         /*
         the following function returns an Array which contains 
         senderFieldKeysArray , and remaningKeysArray
@@ -82,11 +92,14 @@ let RecordSubmission=asyncHandler(
       
         fieldWithSenderAttribute.forEach(
             (keyName) => {
+                console.log("keyname is",keyname);
+                
                 let lastDashIndexPosition=keyName.lastIndexOf("-")
                 //we have sender keys in this format like ff-sender-firstName
                 //so we just want to fetch firstName as entry in our database
                 let senderOriginalKeyName=keyName.slice(lastDashIndexPosition+1)
                 documentTobePut[senderOriginalKeyName]=userData[keyName]
+                
             }
         )
         //addig formid 
@@ -98,7 +111,7 @@ let RecordSubmission=asyncHandler(
         
         for(let fieldName of remainingFieldKeysArray)
         {
-            //let split the array by delimeter - 
+            //let split the array by delimeter -  
             let splittingFieldNameArray=fieldName.split("-")
             let [ffValue,blockTypeName,customFieldName]=splittingFieldNameArray
 
