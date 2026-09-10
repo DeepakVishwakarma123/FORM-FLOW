@@ -23,10 +23,54 @@ async function (req,res,next) {
         }
     )
 
+  
     //in the case of no captcha we just passing request to next middleware
     if(nocaptchaSearch)
     {
         next()
+    }
+
+
+
+    /*
+    this function use as universal function across three captchas to 
+    resolve site verify api token response and decideds whether to surpass user request
+    to next middleware or not
+    */
+
+    function captchaStatus_Checker(response)
+    {
+        console.log("the response object is here",response);
+        
+       if(response.length===1)
+       {
+        res.status('408').json(
+            {
+                "message":response
+            }
+        )
+       }
+       else{
+         let success=response.success
+         console.log("success as respnose field value",success);
+         console.log(typeof(success));
+         
+         if(success===true)
+         {    
+            let anotherObject=removeCapthcaHiddenFieldFromRequestBody(body)
+            req.body=anotherObject            
+            next()
+         }
+         else{
+         res.status(404).json(
+                {
+                    "message":{
+                        captchaResponse:response
+                    }
+                }
+            )
+        }
+       }
     }
 
 
@@ -42,33 +86,7 @@ async function (req,res,next) {
       let secret_key=hcaptchaSearch.hcaptcha.secret_key
       let hcaptchaResponseToken=req.body["h-captcha-response"]
       let response=await formurlenocdecaptchaSecretVerify(hcaptchaSiteVerfiyUrl,hcaptchaResponseToken,secret_key)
-      if(response.length===1)
-       {
-        res.status('408').json(
-            {
-                "message":response
-            }
-        )
-       }
-       else{
-         //just verfiy success field whats' it status 
-          let success=response.success
-         if(success===true)
-         {    
-            let anotherObject=removeCapthcaHiddenFieldFromRequestBody(body)
-            req.body=anotherObject            
-            next()
-         }
-         else{
-            res.status(404).json(
-                {
-                    "message":{
-                        captchaResponse:response
-                    }
-                }
-            )
-         }
-       }
+      captchaStatus_Checker(response)
     }
 
     let recaptchaSearch=await captchas.findOne(
@@ -83,33 +101,7 @@ async function (req,res,next) {
       let secret_key=recaptchaSearch.recaptcha.secret_key
       let recaptchaResponseToken=req.body["g-recaptcha-response"]
       let response=await formurlenocdecaptchaSecretVerify(recaptchaSiteVerifyUrl,recaptchaResponseToken,secret_key)
-      if(response.length===1)
-       {
-        res.status('408').json(
-            {
-                "message":response
-            }
-        )
-       }
-       else{
-         //just verfiy success field whats' it status 
-         let success=response.success
-         if(success===true)
-         {       
-           let anotherObject=removeCapthcaHiddenFieldFromRequestBody(body)
-            req.body=anotherObject
-            next()
-         }
-         else{
-            res.status(404).json(
-                {
-                    "message":{
-                        captchaResponse:response
-                    }
-                }
-            )
-         }
-       }
+      captchaStatus_Checker(response)
     }
 
 
@@ -125,34 +117,7 @@ async function (req,res,next) {
       let secret_key=turnstilecaptchaSearch.turnstile.secret_key
       let turnstilecaptchaResponseToken=req.body["cf-turnstile-response"]
       let response=await formurlenocdecaptchaSecretVerify(cloudFlareTurnStileVerifyUrl,turnstilecaptchaResponseToken,secret_key)
-      if(response.length===1)
-       {
-        res.status('408').json(
-            {
-                "message":response
-            }
-        )
-       }
-       else{
-         //just verfiy success field whats' it status 
-
-          let success=response.success
-         if(success)
-         {
-            let anotherObject=removeCapthcaHiddenFieldFromRequestBody(body)
-            req.body=anotherObject
-            next()
-         }
-         else{
-            res.status(404).json(
-                {
-                    "message":{
-                        captchaResponse:response
-                    }
-                }
-            )
-         }
-       }
+      captchaStatus_Checker(response)
     }
 
     }
