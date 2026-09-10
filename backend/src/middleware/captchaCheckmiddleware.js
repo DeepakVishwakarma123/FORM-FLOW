@@ -7,7 +7,7 @@ on it
 import mongoose from "mongoose";
 import captchas from "../models/captcha-models.js";
 import asyncHandler from "../utils/Async-Handler.js";
-import {formurlenocdecaptchaSecretVerify,removeCapthcaHiddenFieldFromRequestBody, cloudFlareTurnStileVerifyUrl, hcaptchaSiteVerfiyUrl, recaptchaSiteVerifyUrl } from "../utils/constant.js";
+import {formurlenocdecaptchaSecretVerify,cloudFlareTurnStileVerifyUrl, hcaptchaSiteVerfiyUrl, recaptchaSiteVerifyUrl } from "../utils/constant.js";
 
 
 let captchaCheckmiddleware=asyncHandler(
@@ -56,9 +56,7 @@ async function (req,res,next) {
          console.log(typeof(success));
          
          if(success===true)
-         {    
-            let anotherObject=removeCapthcaHiddenFieldFromRequestBody(body)
-            req.body=anotherObject            
+         {               
             next()
          }
          else{
