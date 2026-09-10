@@ -31,7 +31,10 @@ function createDyanmicSchemaValidation(requestBody){
 
 let formSchema=joi.object(
   schemaRules
-
+).or('ff-sender-firstName','ff-sender-lastName','ff-sender-fullName','ff-sender-email','ff-sender-phone','ff-sender-title','ff-sender-company','ff-sender-address','ff-sender-dob').messages(
+  {
+    'object.missing':"no contact details related name attribute found add these attribute at least one firstName,LastName,fullName,email,phone available etc in form"
+  }
 )
 return formSchema
 }
@@ -43,6 +46,7 @@ function validate(req,res,next) {
     let requestBody=req.body  
     let formSchema=createDyanmicSchemaValidation(requestBody)
     let {error,value}=formSchema.validate(requestBody)  
+    console.log("joi error here",error);
     
    if(error===undefined)
     {
@@ -51,7 +55,7 @@ function validate(req,res,next) {
     }
   res.status(200).json(
     {
-     "error details":error["details"][0]
+     "error are here":error["details"][0]
     }
   )
 }
