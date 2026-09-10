@@ -66,17 +66,7 @@ let RecordSubmission=asyncHandler(
 
         let {formid}=req.params
         let userData=req.body
-        let fieldKeysArray=Object.keys(userData)
-
-        if(fieldKeysArray.length===0)
-        {
-            res.status(406).json(
-                {
-                    "message":"request is not processable please add valid name attribute in forms"
-                }
-            )
-        }
-        
+        let fieldKeysArray=Object.keys(userData)        
         /*
         the following function returns an Array which contains 
         senderFieldKeysArray , and remaningKeysArray
