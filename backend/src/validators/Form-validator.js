@@ -45,11 +45,12 @@ function validate(req,res,next) {
 
     let requestBody=req.body  
     let formSchema=createDyanmicSchemaValidation(requestBody)
-    let {error,value}=formSchema.validate(requestBody)  
+    let {error,value}=formSchema.validate(requestBody,{stripUnknown:true})  
     console.log("joi error here",error);
     
    if(error===undefined)
     {
+        req.body=value
         next()
         return
     }
