@@ -11,6 +11,10 @@ const formSchema=new Schema(
         userId:{
             type:Schema.Types.ObjectId,
             ref:"users"
+        },
+        AllowedDomains:{
+            type:Schema.Types.Array,
+            default:[]
         }
     }
 )
