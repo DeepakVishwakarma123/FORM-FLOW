@@ -82,8 +82,6 @@ let RecordSubmission=asyncHandler(
       
         fieldWithSenderAttribute.forEach(
             (keyName) => {
-                console.log("keyname is",keyname);
-                
                 let lastDashIndexPosition=keyName.lastIndexOf("-")
                 //we have sender keys in this format like ff-sender-firstName
                 //so we just want to fetch firstName as entry in our database
