@@ -12,6 +12,8 @@ let AuthorizeDomainMiddleware=asyncHandler(
         //we know that when request or form submissin is getting held we get form id in parmas as well
         //we use it to grab the form document here and match it with request origin domain whether it matches or not
         let requestOriginDetails=req.get('origin')
+        console.log("request origin details are",requestOriginDetails);
+        
         //let first search whether id exist or not 
         let {formid}=req.params
         let isFormExist=await forms.findOne({_id:formid})
@@ -32,26 +34,32 @@ let AuthorizeDomainMiddleware=asyncHandler(
             else{
                 //otherwise searching and validating things
                 for(let indexCount=0;indexCount<AllowedDomainsArray.length;indexCount++)
-                {
+                {    
                     //matching whether domains name includes with exsting origin or not 
                     let domainName=AllowedDomainsArray[indexCount]
-                    if(requestOriginDetails.includes(domainName))
+                    let originName=`${requestOriginDetails}`
+                    let isAllowedDomain=originName.includes(domainName)
+                    if(isAllowedDomain===true)
                     {
-                        next()
-                    }
-                    else{
-                        break;
+                        console.log("middleware passed here and we are now");
+                        
+                        await next()
+                        return
                     }
                 }
-                res.status(403).json(
+                 res.status(403).json(
                     {
                         "message":"unprocessable request domain is not allowed",
                         "excludedDomain":requestOriginDetails
                     }
-                )
+                    )
+                return 
             }
     }
 )
 
 
 export {AuthorizeDomainMiddleware}
+
+// 
+
